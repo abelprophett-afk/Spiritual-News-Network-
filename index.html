@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOMEFORGE • HEARTFORGE HOUSE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+```
+<style>
+    .glow { text-shadow: 0 0 10px #c084fc, 0 0 20px #c084fc; }
+    .forge-grid {
+        background-image: 
+            linear-gradient(rgba(192, 132, 252, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(192, 132, 252, 0.05) 1px, transparent 1px);
+        background-size: 40px 40px;
+    }
+    .admin-panel {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.95);
+        border: 2px solid #c084fc;
+        border-radius: 12px;
+        padding: 20px;
+        z-index: 1000;
+        max-width: 400px;
+    }
+    .hidden { display: none; }
+</style>
+```
+
+</head>
+
+<body class="bg-gradient-to-br from-gray-900 via-purple-900 to-black text-white min-h-screen forge-grid">
+
+```
+<!-- ADMIN LOGIN BUTTON -->
+<button onclick="showAdminLogin()" class="fixed top-4 right-4 z-50 bg-purple-600/50 hover:bg-purple-600 px-4 py-2 rounded text-sm">
+    <i class="fas fa-lock"></i> Admin
+</button>
+
+<!-- ADMIN LOGIN PANEL -->
+<div id="adminLoginPanel" class="admin-panel hidden">
+    <h3 class="text-xl font-bold mb-4">Admin Login</h3>
+    <input 
+        type="password" 
+        id="adminPassword"
+        placeholder="Enter password"
+        class="w-full px-4 py-2 bg-black border border-purple-500 rounded text-white mb-3"
+        onkeypress="if(event.key==='Enter') adminLogin()"
+    >
+    <div class="flex gap-2">
+        <button onclick="adminLogin()" class="flex-1 bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded">
+            Login
+        </button>
+        <button onclick="closeAdminPanel()" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded">
+            Close
+        </button>
+    </div>
+    <p id="loginError" class="text-red-400 text-sm mt-2 hidden">Incorrect password</p>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="adminPanel" class="admin-panel hidden">
+    <div class="flex justify-between items-center mb-4">
+        <h3 class="text-xl font-bold">Post Message</h3>
+        <button onclick="adminLogout()" class="text-sm text-purple-400 hover:text-purple-300">
+            Logout
+        </button>
+    </div>
+    <textarea 
+        id="adminMessageInput"
+        placeholder="Write your message..."
+        class="w-full px-4 py-2 bg-black border border-purple-500 rounded text-white mb-3 h-32"
+    ></textarea>
+    <button onclick="adminPostMessage()" class="w-full bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded font-bold">
+        POST TO BOARD
+    </button>
+</div>
+
+<div class="max-w-5xl mx-auto p-6">
+
+    <!-- HEADER -->
+    <header class="text-center py-10 mb-10">
+        <h1 class="text-6xl font-black glow mb-4">HEARTFORGE HOUSE</h1>
+        <p class="text-purple-300 text-lg italic">A Sanctuary for Recovery, Healing, and Soul Restoration</p>
+    </header>
+
+    <!-- SOUL-WARMING WELCOME -->
+    <section class="bg-black/40 border border-purple-500 rounded-xl p-8 mb-12 text-center">
+        <p class="text-2xl text-purple-200 leading-relaxed">
+            <span class="block mb-4">Welcome, beloved soul.</span>
+            You've arrived at HEARTFORGE HOUSE — a sanctuary where the weary are restored, 
+            the lost are guided, and the healing you've been seeking finally meets you.
+            <br><br>
+            Here, your spirit is safe.  
+            Here, your journey is honored.  
+            Here, you are seen, held, and welcomed home.
+        </p>
+    </section>
+
+    <!-- SIX REALMS GRID -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+
+        <!-- SNN -->
+        <a href="#" class="bg-pink-950/30 border-2 border-pink-500 rounded-xl p-6 hover:bg-pink-950/50 transition-all">
+            <div class="text-4xl mb-3">🌸</div>
+            <h3 class="text-xl font-bold mb-2">SNN: Pretty In Pink</h3>
+            <p class="text-sm text-pink-300">Empowerment for women, mothers, and children</p>
+        </a>
+
+        <!-- Luma's Workshop -->
+        <a href="#" class="bg-amber-950/30 border-2 border-amber-500 rounded-xl p-6 hover:bg-amber-950/50 transition-all">
+            <div class="text-4xl mb-3">🛠️</div>
+            <h3 class="text-xl font-bold mb-2">Luma's Workshop</h3>
+            <p class="text-sm text-amber-300">Collaborative creation & ecosystem development</p>
+        </a>
+
+        <!-- HeartForge House -->
+        <a href="#" class="bg-purple-950/30 border-2 border-purple-500 rounded-xl p-6 hover:bg-purple-950/50 transition-all">
+            <div class="text-4xl mb-3">🏛️</div>
+            <h3 class="text-xl font-bold mb-2">HeartForge House</h3>
+            <p class="text-sm text-purple-300">Healing content for the soul</p>
+        </a>
+
+        <!-- Message Board -->
+        <a href="#messageBoard" class="bg-blue-950/30 border-2 border-blue-500 rounded-xl p-6 hover:bg-blue-950/50 transition-all">
+            <div class="text-4xl mb-3">💬</div>
+            <h3 class="text-xl font-bold mb-2">Message Board</h3>
+            <p class="text-sm text-blue-300">Your public updates & transmissions</p>
+        </a>
+
+        <!-- Music Vault -->
+        <a href="#" class="bg-green-950/30 border-2 border-green-500 rounded-xl p-6 hover:bg-green-950/50 transition-all">
+            <div class="text-4xl mb-3">🎵</div>
+            <h3 class="text-xl font-bold mb-2">Music Vault</h3>
+            <p class="text-sm text-green-300">Your music, audio files & SoundCloud links</p>
+        </a>
+
+        <!-- Creations -->
+        <a href="#" class="bg-indigo-950/30 border-2 border-indigo-500 rounded-xl p-6 hover:bg-indigo-950/50 transition-all">
+            <div class="text-4xl mb-3">🖋️</div>
+            <h3 class="text-xl font-bold mb-2">Creations</h3>
+            <p class="text-sm text-indigo-300">Teachings, writings, photography & more</p>
+        </a>
+
+    </section>
+
+    <!-- PUBLIC MESSAGE BOARD -->
+    <section id="messageBoard" class="bg-purple-950/20 border-2 border-purple-500 rounded-xl p-6 mb-12">
+        <h2 class="text-2xl font-bold mb-4 flex items-center gap-3">
+            <i class="fas fa-comments"></i> Message Board
+        </h2>
+
+        <div id="messages" class="space-y-4 mb-6 max-h-96 overflow-y-auto">
+            <div class="bg-black/30 border border-purple-700 rounded p-4">
+                <div class="text-sm text-purple-400 mb-2">Welcome</div>
+                <p>HOMEFORGE is live. This is your sacred space outside the noise.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="text-center py-6 border-t-2 border-purple-500">
+        <p class="text-purple-400 italic mb-2">"Where the soul returns to itself"</p>
+        <p class="text-sm text-purple-600">HEARTFORGE HOUSE • HOMEFORGE • Est. 2025</p>
+    </footer>
+
+</div>
+```
+
+<script>
+    // Simple password - change this to whatever you want
+    const ADMIN_PASSWORD = 'heartforge2025';
+    let isAdmin = false;
+    let messages = [];
+
+    // Check if already logged in
+    if (localStorage.getItem('adminAuth') === ADMIN_PASSWORD) {
+        isAdmin = true;
+    }
+
+    // Admin functions
+    function showAdminLogin() {
+        if (isAdmin) {
+            document.getElementById('adminPanel').classList.remove('hidden');
+        } else {
+            document.getElementById('adminLoginPanel').classList.remove('hidden');
+        }
+    }
+
+    function adminLogin() {
+        const password = document.getElementById('adminPassword').value;
+        if (password === ADMIN_PASSWORD) {
+            isAdmin = true;
+            localStorage.setItem('adminAuth', ADMIN_PASSWORD);
+            document.getElementById('adminLoginPanel').classList.add('hidden');
+            document.getElementById('loginError').classList.add('hidden');
+            document.getElementById('adminPanel').classList.remove('hidden');
+            document.getElementById('adminPassword').value = '';
+        } else {
+            document.getElementById('loginError').classList.remove('hidden');
+        }
+    }
+
+    function adminLogout() {
+        isAdmin = false;
+        localStorage.removeItem('adminAuth');
+        document.getElementById('adminPanel').classList.add('hidden');
+    }
+
+    function closeAdminPanel() {
+        document.getElementById('adminLoginPanel').classList.add('hidden');
+        document.getElementById('adminPanel').classList.add('hidden');
+    }
+
+    function adminPostMessage() {
+        const input = document.getElementById('adminMessageInput');
+        const text = input.value.trim();
+        if (!text) return;
+
+        const message = {
+            id: Date.now(),
+            text: text,
+            timestamp: new Date().toLocaleString(),
+            author: 'HOMEFORGE'
+        };
+
+        messages.unshift(message);
+        localStorage.setItem('homeforge_public_messages', JSON.stringify(messages));
+        input.value = '';
+        renderMessages();
+        
+        // Show success feedback
+        const btn = event.target;
+        const originalText = btn.textContent;
+        btn.textContent = 'POSTED!';
+        btn.classList.add('bg-green-600');
+        setTimeout(() => {
+            btn.textContent = originalText;
+            btn.classList.remove('bg-green-600');
+        }, 2000);
+    }
+
+    // Load and render messages
+    function loadMessages() {
+        const stored = localStorage.getItem('homeforge_public_messages');
+        if (stored) {
+            try {
+                messages = JSON.parse(stored);
+                renderMessages();
+            } catch (e) {
+                messages = [];
+            }
+        }
+    }
+
+    function deleteMessage(id) {
+        if (!isAdmin) return;
+        if (confirm('Delete this message?')) {
+            messages = messages.filter(m => m.id !== id);
+            localStorage.setItem('homeforge_public_messages', JSON.stringify(messages));
+            renderMessages();
+        }
+    }
+
+    function renderMessages() {
+        const container = document.getElementById('messages');
+        if (messages.length === 0) {
+            container.innerHTML = `
+                <div class="bg-black/30 border border-purple-700 rounded p-4">
+                    <div class="text-sm text-purple-400 mb-2">Welcome</div>
+                    <p>HOMEFORGE is live. This is your sacred space outside the noise.</p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = messages.map(msg => `
+            <div class="bg-black/30 border border-purple-700 rounded p-4">
+                <div class="flex justify-between items-start mb-2">
+                    <div>
+                        <div class="text-sm font-bold text-purple-300">${msg.author || 'HOMEFORGE'}</div>
+                        <div class="text-xs text-purple-400">${msg.timestamp}</div>
+                    </div>
+                    ${isAdmin ? `
+                    <button onclick="deleteMessage(${msg.id})" class="text-purple-400 hover:text-red-400">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    ` : ''}
+                </div>
+                <p class="whitespace-pre-wrap">${msg.text}</p>
+            </div>
+        `).join('');
+    }
+
+    // Load messages on page load
+    document.addEventListener('DOMContentLoads', loadMessages);
+</script>
+
+</body>
+</html>
